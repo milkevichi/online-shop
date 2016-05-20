@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.milkevich.model.Category" table="categories" catalog="online_shop">
+        <id name="categoryId" type="java.lang.Integer">
+            <column name="category_id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true"/>
+        </property>
+
+        <many-to-one name="parent" class="com.milkevich.model.Category" fetch="join"  lazy="false" insert="false" update="false">
+            <column name="parent_id"/>
+        </many-to-one>
+
+        <property name="parentId" type="java.lang.Integer">
+            <column name="parent_id"/>
+        </property>
+
+        <set name="children" table="categories" inverse="false" lazy="false" fetch="join" order-by="name"
+             cascade="all-delete-orphan">
+            <key>
+                <column name="parent_id" not-null="true"/>
+            </key>
+            <one-to-many class="com.milkevich.model.Category"/>
+        </set>
+
+    </class>
+</hibernate-mapping>

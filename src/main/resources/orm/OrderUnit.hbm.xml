@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.milkevich.model.OrderUnit" table="orders" catalog="online_shop">
+        <id name="orderId" type="java.lang.Integer">
+            <column name="order_id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="number" type="java.lang.Integer">
+            <column name="number" not-null="true"/>
+        </property>
+
+        <many-to-one name="user" class="com.milkevich.model.User" fetch="join"  lazy="false">
+            <column name="username"/>
+        </many-to-one>
+
+        <many-to-one name="product" class="com.milkevich.model.Product" fetch="join"  lazy="false" insert="false" update="false">
+            <column name="product_id"/>
+        </many-to-one>
+
+        <property name="productId" type="java.lang.Integer">
+            <column name="product_id"/>
+        </property>
+
+        <property name="count" type="java.lang.Integer">
+            <column name="count"/>
+        </property>
+
+        <property name="amount" type="java.math.BigDecimal">
+            <column name="amount"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

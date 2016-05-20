@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="8" author="milkevich" runOnChange="true">
+        <createTable tableName="categories">
+            <column autoIncrement="true" name="category_id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_id" type="int(11)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="parent_id"
+                                 baseTableName="categories"
+                                 constraintName="fk_category_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="category_id"
+                                 referencedTableName="categories"/>
+    </changeSet>
+
+    <changeSet id="9" author="milkevich" runOnChange="true">
+        <createTable tableName="products">
+            <column autoIncrement="true" name="product_id" type="int(11)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="products"
+                                 constraintName="fk_category"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="category_id"
+                                 referencedTableName="categories"/>
+    </changeSet>
+
+</databaseChangeLog>
